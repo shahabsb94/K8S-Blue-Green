@@ -1,0 +1,23 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: app2
+  annotations:
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/target-type: ip
+    alb.ingress.kubernetes.io/listen-ports: '[{"HTTPS": 443}]'
+    alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:us-east-1:180935779261:certificate/e19e433f-0bbe-4ee7-a25f-aba6ff1240e4
+    alb.ingress.kubernetes.io/group.name: shahabsb
+spec:
+  ingressClassName: alb
+  rules:
+    - host: "app2.meetshabu.space"
+      http:
+        paths:
+        - pathType: Prefix
+          path: "/"
+          backend:
+            service:
+              name: frontend
+              port:
+                number: 80
